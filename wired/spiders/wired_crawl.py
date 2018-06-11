@@ -15,7 +15,7 @@ class WiredCrawlSpider(scrapy.Spider):
     def parse(self, response):
         base_url = response.url
         urls = base_url + 'most-recent/page/%d/?output=json'
-        for page in range(1, 10):
+        for page in range(1, 5):
             request = Request(urls % page, callback=self.parse_list)
             yield request
         # request = Request(urls % 1, callback=self.parse_list)
@@ -89,7 +89,6 @@ class WiredCrawlSpider(scrapy.Spider):
                     yield item
             else:
                 break
-                # continue
 
     @staticmethod
     def text_format(text):
