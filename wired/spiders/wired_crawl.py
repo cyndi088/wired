@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy import Request
 import json
+import re
+from scrapy import Request
 from datetime import datetime
 from scrapy.utils.project import get_project_settings
 from pymongo import MongoClient
@@ -10,28 +11,27 @@ from pymongo import MongoClient
 class WiredCrawlSpider(scrapy.Spider):
     name = 'wired_crawl'
     allowed_domains = ['www.wired.com']
-    start_urls = ['http://www.wired.com/']
+    start_urls = ['http://www.wired.com/most-recent/page/1/?output=json']
 
     def parse(self, response):
-        base_url = response.url
-        urls = base_url + 'most-recent/page/%d/?output=json'
-        for page in range(1, 5):
-            request = Request(urls % page, callback=self.parse_list)
-            yield request
-        # request = Request(urls % 1, callback=self.parse_list)
-        # yield request
-
-    def parse_list(self, response):
         settings = get_project_settings()
         self.client = MongoClient(host=settings['MONGO_HOST'], port=settings['MONGO_PORT'], username=settings['MONGO_USER'], password=settings['MONGO_PSW'])
         self.db = self.client[settings['MONGO_DB']]
         self.coll = self.db[settings['MONGO_COLL']]
+        next_page = 'http://www.wired.com/most-recent/page/%d/?output=json'
         resp = json.loads(response.text)
-        for i in range(len(resp['primary']['items'])):
-            if self.coll.find_one({"title": self.text_format(resp['primary']['items'][i]['hed'])}) == None:
+        page = self.get_page(response.url)
+        i = 0
+        while i < len(resp['primary']['items']):
+            if self.coll.find_one({"article_id": self.text_format(resp['primary']['items'][i]['id'])}) == None:
                 item = {}
                 # 抓取时间
                 item['stamp_time'] = datetime.now()
+                # 文章ID
+                if 'id' in resp['primary']['items'][i]:
+                    item['article_id'] = resp['primary']['items'][i]['id']
+                else:
+                    item['article_id'] = ''
                 # 作者
                 if 'author' in resp['primary']['items'][i]['contributors']:
                     item['author'] = resp['primary']['items'][i]['contributors']['author'][0]['name']
@@ -52,11 +52,6 @@ class WiredCrawlSpider(scrapy.Spider):
                     item['published_time'] = resp['primary']['items'][i]['dateFormats']['g:i a']
                 else:
                     item['published_time'] = ''
-                # 发布时间戳
-                # if 'c' in resp['primary']['items'][i]['dateFormats']:
-                #     item['published_stamp'] = self.time_stamp(resp['primary']['items'][i]['dateFormats']['c'])
-                # else:
-                #     item['published_stamp'] = ''
                 # 文章标题
                 if 'hed' in resp['primary']['items'][i]:
                     item['title'] = self.text_format(resp['primary']['items'][i]['hed'])
@@ -84,17 +79,29 @@ class WiredCrawlSpider(scrapy.Spider):
                 if resp['primary']['items'][i]['body'] != '':
                     item['content'] = resp['primary']['items'][i]['body']
                     yield item
+                    i += 1
                 else:
                     item['content'] = ''
                     yield item
+                    i += 1
             else:
                 break
+        else:
+            page += 1
+            request = Request(next_page % page, callback=self.parse)
+            yield request
 
     @staticmethod
     def text_format(text):
         if text is None:
             return None
         return text.replace('\n', '').replace('\t', '').replace('<em>', '').replace('</em>', '').replace('&#39;', "'").replace('&amp;', '&').strip()
+
+    @staticmethod
+    def get_page(url):
+        ls = re.match(".*page/(\d+)", url)
+        str = ls.group(1)
+        return int(str)
 
     # @staticmethod
     # def time_stamp(str):
