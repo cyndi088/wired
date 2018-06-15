@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57b36fa1-39fc-4580-a9be-9169a654e425" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wired/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wired/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wired/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wired/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/wired/spiders/wired_crawl.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/wired/spiders/wired_crawl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbs/wired.db" beforeDir="false" afterPath="$PROJECT_DIR$/dbs/wired.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wired/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/wired/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wired/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/wired/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wired/spiders/wired_crawl.py" beforeDir="false" afterPath="$PROJECT_DIR$/wired/spiders/wired_crawl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/twistd.pid" beforeDir="false" afterPath="$PROJECT_DIR$/twistd.pid" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +40,8 @@
       <file leaf-file-name="wired_crawl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wired/spiders/wired_crawl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="684">
-              <caret line="53" column="47" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
+            <state relative-caret-position="1330">
+              <caret line="87" column="21" selection-start-line="87" selection-start-column="21" selection-end-line="87" selection-end-column="21" />
               <folding>
                 <element signature="e#24#37#0" expanded="true" />
               </folding>
@@ -316,8 +318,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wired/spiders/wired_crawl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="53" column="47" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
+        <state relative-caret-position="1330">
+          <caret line="87" column="21" selection-start-line="87" selection-start-column="21" selection-end-line="87" selection-end-column="21" />
           <folding>
             <element signature="e#24#37#0" expanded="true" />
           </folding>

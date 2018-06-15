@@ -19,7 +19,7 @@ MONGO_PORT = 31006
 MONGO_USER = 'llps'
 MONGO_PSW = 'llps&789'
 MONGO_DB = 'neo_crawl_data'
-MONGO_COLL = 'wired_articles'
+MONGO_COLL = 'wired_articles_test'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'wired (+http://www.yourdomain.com)'
 
